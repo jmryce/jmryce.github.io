@@ -1,0 +1,422 @@
+body {
+  color: black;
+  font-family: 'Josefin Slab', serif;
+  margin: 0px;
+}
+
+header {
+  background-image: url("../Images/header-ny.png");
+  max-width: 100%;
+  height: auto;
+  width: auto\9;
+  padding: 21%;
+}
+
+section {
+  background: #D3D3D3;
+  padding: 2%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+footer {
+  background: #D3D3D3;
+  padding: 2vw;
+  display: flex;
+  flex-direction: row;
+  font-size: 1.2vw;
+  color: white;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+p {
+  color: white;
+  margin: auto;
+  line-height: 2.5vw;
+}
+
+div {
+  margin: auto;
+}
+
+ul {
+  list-style-type: circle;
+  margin-left: 0%;
+}
+
+form {
+  padding-top: 50px;
+  /*transition: all 4s ease-in-out;*/
+}
+
+input {
+  height: 45px;
+}
+.name {
+  color: #283467;
+  text-align: center;
+  font-size: 8vw;
+}
+
+.nav-index {
+  text-align: center;
+  /*margin: 0 0.5vw;*/
+}
+
+.nav-a-e-h-f {
+  margin: auto;
+  text-align: center;
+  width: 16.6%;
+  height: 110%;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 22px;
+  font-weight: bold;
+  background: #D3D3D3;
+  /*background-image: url("../Images/background.jpg");*/
+  color: white;
+  font-family: 'Josefin Slab', serif;
+}
+
+.nav-a-e-h-f:hover {
+  opacity: 0.5;
+}
+
+.nav-section {
+  background: #D3D3D3;
+}
+
+.fhs-flc {
+  display: inline-block;
+  font-size: 20px;
+  color: white;
+  /*background-color: #69739A;*/
+  background-image: url("../Images/background.jpg");
+  padding: 1vw 6vw 3vw 3vw;
+  height: 22vw;
+  width: 20vw;
+}
+
+.button1 {
+  float: left;
+  display: inline-block;
+  background-image: url("../Images/background.jpg");
+  opacity: 0.9;
+  border: 0.1em #FFFFFF;
+  border-radius: 0.19em;
+  padding: 10vw 1.7vw;
+  width: 15vw;
+  font-size: 40px;
+  transition-duration: 0.2s;
+}
+
+.button1:hover {
+  color: #FFFFFF;
+  opacity: 0.5;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.button2 {
+  float: left;
+  display: inline-block;
+  background-image: url("../Images/background.jpg");
+  opacity: 0.9;
+  border: 0.1em #FFFFFF;
+  border-radius: 0.19em;
+  padding: 10vw 1.7vw;
+  width: 15vw;
+  font-size: 40px;
+  transition-duration: 0.2s;
+}
+
+.button2:hover {
+  color: #FFFFFF;
+  opacity: 0.5;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+.button3 {
+  float: left;
+  display: inline-block;
+  background-image: url("../Images/background.jpg");
+  opacity: 0.9;
+  border: 0.1em #FFFFFF;
+  border-radius: 0.19em;
+  padding: 10vw 1.7vw;
+  width: 15vw;
+  font-size: 40px;
+  transition-duration: 0.2s;
+}
+
+.button3:hover {
+  color: #FFFFFF;
+  opacity: 0.5;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.button4 {
+  float: left;
+  display: inline-block;
+  background-image: url("../Images/background.jpg");
+  opacity: 0.9;
+  border: 0.1em #FFFFFF;
+  border-radius: 0.19em;
+  padding: 10vw 1.7vw;
+  width: 15vw;
+  font-size: 40px;
+  transition-duration: 0.2s;
+}
+
+.button4:hover {
+  color: #FFFFFF;
+  opacity: 0.5;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.button5 {
+  float: left;
+  display: inline-block;
+  background-image: url("../Images/background.jpg");
+  opacity: 0.9;
+  border: 0.1em #FFFFFF;
+  border-radius: 0.19em;
+  padding: 10vw 1.7vw;
+  width: 15vw;
+  font-size: 40px;
+  transition-duration: 0.2s;
+}
+
+.button5:hover {
+  color: #FFFFFF;
+  opacity: 0.5;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.about-p {
+  text-align: center;
+  font-size: 20px;
+  float: left;
+  display: inline-block;
+  /*background-color: #69739A;*/
+  background-image: url("../Images/background2.jpg");
+  padding: 3vw;
+}
+
+.jessie {
+  float: right;
+  display: block;
+  transform: rotate(270deg);
+  padding: 5vw 2vw;
+  width: 30vw;
+  height: 20vw;
+  border-radius: 3px;
+}
+
+.hobbies {
+  margin: 1vw;
+  font-size: 20px;
+  color: white;
+  background-image: url("../Images/background2.jpg");
+  padding: 1vw 3vw 3vw 3vw;
+  height: 10%;
+  width: 100%;
+}
+
+.hiking {
+  float: right;
+  position: relative;
+  top: 0vw;
+  width: 16vw;
+  height: 21vw;
+  border: 0.3vw solid #2F3954;
+}
+
+.malawi {
+  float: left;
+  position: relative;
+  top: 0vw;
+  width: 25vw;
+  height: 18vw;
+  border: 0.3vw solid #2F3954;
+}
+
+.portfolio-link:hover {
+  text-decoration: underline;
+}
+
+.tabContainer {
+  width: 100%;
+  height: 350px;
+}
+
+.tabContainer .buttonContainer {
+  height: 15%;
+}
+
+.tabContainer .buttonContainer button {
+  width: 6.665%;
+  height: 110%;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 14.3px;
+  background-color: #09132c;
+  opacity: 0.9;
+  /*background-image: url("../Images/background.jpg");*/
+  color: white;
+  font-family: 'Josefin Slab', serif;
+}
+
+.tabContainer .buttonContainer button:hover {
+  opacity: 0.8;
+}
+
+.tabContainer .tabPanel {
+  margin-left: 15%;
+  margin-right: 15%;
+  background-color: #09132c;
+  opacity: 0.9;
+  /*background-image: url("../Images/background2.jpg");*/
+  color: white;
+  text-align: left;
+  padding-top: 20px;
+  box-sizing: border-box;
+  font-size: 22px;
+  display: none;
+}
+
+h1.payroll {
+  color: #2F3954;
+  margin-left: 0.8vw;
+  padding: 10px 0px;
+}
+
+body.payroll-bg {
+  background-color: #EAEBED;
+}
+
+#employee-h {
+    height: 80vw;
+    font-size: 20px;
+}
+
+#salaried-h {
+  height: 39vw;
+  font-size: 20px;
+}
+
+#salaried-cpp {
+  height: 64vw;
+  font-size: 20px;
+}
+
+#foreperson-h {
+ height: 43vw;
+ font-size: 20px;
+}
+
+#foreperson-cpp {
+  height: 75vw;
+  font-size: 20px;
+}
+
+#manager-h {
+  height: 43vw;
+  font-size: 20px;
+}
+
+ #manager-cpp {
+  height: 75vw;
+  font-size: 20px;
+}
+
+#hourly-h {
+  height: 43vw;
+  font-size: 20px;
+}
+
+#hourly-cpp {
+  height: 76vw;
+  font-size: 20px;
+}
+
+#assembler-h {
+  height: 47vw;
+  font-size: 20px;
+}
+
+#assembler-cpp {
+  height: 86vw;
+  font-size: 20px;
+}
+
+#truckdriver-h {
+  height: 49vw;
+  font-size: 20px;
+}
+
+#truckdriver-cpp {
+  height: 86vw;
+  font-size: 20px;
+}
+
+#payroll-h {
+  height: 53vw;
+  font-size: 20px;
+}
+
+#payroll-cpp {
+  height: 310vw;
+  font-size: 20px;
+}
+
+.contact-form {
+  background: #D3D3D3;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+}
+
+.form-control {
+  width: 600px;
+  background: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid gray;
+  color: white;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.submit {
+  /*background: #2F3954;*/
+  background-image: url("../Images/background.jpg");
+  border-color: transparent;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  height: 50px;
+  margin-top: 20px;
+  padding: 3px 3px 1px 3px;
+  font-family: 'Josefin Slab', serif;
+}
+
+.submit:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+

@@ -1,0 +1,923 @@
+<!doctype html>
+<html>
+
+  <head>
+    <title>Payroll</title>
+    <link href="Styles/main.css" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Slab" rel="stylesheet">
+  </head>
+
+  <body class="payroll-bg">
+    <div id="page-container">
+      <div id="content-wrap">
+        <section class="nav-section">
+          <button class="nav-a-e-h-f"><a href="index.html">Home</a></button>
+      <button class="nav-a-e-h-f"><a href="about.html">About</a></button>
+      <button class="nav-a-e-h-f"><a href="education.html">Education</a></button>
+      <button class="nav-a-e-h-f"><a href="portfolio.html">Code Samples</a></button>
+      <button class="nav-a-e-h-f"><a href="hobbies.html">Extracurriculars</a></button>
+      <button class="nav-a-e-h-f"><a href="contact.html">Contact</a></button>
+        </section>
+
+        <h1 class="payroll">Employee Payroll</h1>
+        <div class="tabContainer">
+          <div class="buttonContainer">
+            <button onclick="showPanel(0)">Employee.h</button>
+            <button onclick="showPanel(1)">Salaried.h</button>
+            <button onclick="showPanel(2)">Salaried.cpp</button>
+            <button onclick="showPanel(3)">Foreperson.h</button>
+            <button onclick="showPanel(4)">Foreperson.cpp</button>
+            <button onclick="showPanel(5)">Manager.h</button>
+            <button onclick="showPanel(6)">Manager.cpp</button>
+            <button onclick="showPanel(7)">Hourly.h</button>
+            <button onclick="showPanel(8)">Hourly.cpp</button>
+            <button onclick="showPanel(9)">Assembler.h</button>
+            <button onclick="showPanel(10)">Assembler.cpp</button>
+            <button onclick="showPanel(11)">Truckdriver.h</button>
+            <button onclick="showPanel(12)">Truckdriver.cpp</button>
+            <button onclick="showPanel(13)">Payroll.h</button>
+            <button onclick="showPanel(14)">Payroll.cpp</button>
+          </div>
+
+          <pre id="employee-h" class="tabPanel">
+  1 //Employee.h
+  2 // ============================================================
+  3 //                        Employee Class Interface
+  4 //  ============================================================
+  5 //
+  6 //      Copyright (C) 2016
+  7 //
+  8 //      Professor David E. Fox
+  9 //      Computer Science 
+ 10 //      American River College
+ 11 //      Sacramento, CA  95841
+ 12 //
+ 13 //      Permission is granted to use at your own risk and
+ 14 //      distribute this software in source and binary forms
+ 15 //      provided the above copyright notice and this paragraph
+ 16 //      are preserved on all copies.  This software is provided
+ 17 //      "as is" with no express or implied warranty.
+ 18 //
+ 19 //  ============================================================
+ 20 
+ 21 //
+ 22 
+ 23 #ifndef _EMPLOYEE_H_DEF_
+ 24 #define _EMPLOYEE_H_DEF_
+ 25 
+ 26 #include <iostream>
+ 27 using namespace std;
+ 28 
+ 29 #include "Short_String.h"
+ 30 
+ 31 
+ 32 class Employee
+ 33 {
+ 34 STRING       _name;
+ 35 unsigned     _dependents;
+ 36 
+ 37 
+ 38 public:
+ 39 
+ 40 Employee ( );
+ 41 Employee ( const STRING& Name, unsigned Dependents );
+ 42 Employee ( const Employee& );
+ 43 virtual ~Employee();
+ 44 
+ 45 const Employee& operator= ( const Employee& );
+ 46 STRING getName ( ) const;
+ 47 void   setName ( const STRING& );
+ 48 unsigned getDependents ( ) const;
+ 49 void setDependents ( unsigned );
+ 50 
+ 51 friend ostream &operator << ( ostream&, const Employee& );
+ 52 virtual void Display( ostream& ) const;
+ 53 virtual double GrossPay ( ) const = 0;
+ 54 };
+ 55 
+ 56 
+ 57 #endif
+          </pre>
+
+          <pre id="salaried-h" class="tabPanel">
+  1 // Salaried.h
+  2
+  3 #ifndef _SALARIED_H_JMR_
+  4 #define _SALARIED_H_JMR_
+  5 #include "Employee.h"
+  6 
+  7 class Salaried : public Employee
+  8 {
+  9   double _monthly_salary;
+ 10 
+ 11
+ 12 public:
+ 13   Salaried ( );
+ 14   Salaried ( const STRING& Name, unsigned Dependents, double MonthlySalary );
+ 15   Salaried ( const Salaried& );
+ 16 
+ 17   const Salaried& operator= ( const Salaried& );
+ 18
+ 19   double getMonthlySalary ( ) const;
+ 20   void setMonthlySalary ( double );
+ 21
+ 22   friend ostream &operator << ( ostream&, const Salaried& );
+ 23   void display ( ostream& ) const;
+ 24 
+ 25 };
+ 26 
+ 27 #endif
+          </pre>
+
+          <pre id="salaried-cpp" class="tabPanel">
+  1 //Salaried.cpp
+  2
+  3 #include "Salaried.h"
+  4
+  5 Salaried::Salaried ( )
+  6 : public Employee()
+  7 {
+  8   _monthly_salary = 0;
+  9 }
+ 10
+ 11 Salaried::Salaried ( const STRING& Name, unsigned Dependents, double MonthlySalary )
+ 12 : public Employee ( Name, Dependents )
+ 13 {
+ 14   _monthly_salary = MonthlySalary;
+ 15 }
+ 16
+ 17 Salaried::Salaried ( const Salaried& S )
+ 18 : public Employee( static_cast<const Employee&>(S))
+ 19 {
+ 20   _monthly_salary = S._monthly_salary;
+ 21 }
+ 22 
+ 23 const Salaried& Salaried::operator= ( const Salaried& S )
+ 24 {
+ 25   if ( &S == this ) return *this;
+ 26   static_cast<Employee&>(*this) = static_cast<const Employee&>(S);
+ 27   _monthly_salary = S._monthly_salary;
+ 28   return *this;
+ 29 }
+ 30 
+ 31 double Salaried::getMonthlySalary ( ) const { return _monthly_salary; }
+ 32 
+ 33 void Salaried::setMonthlySalary ( double d ) { _monthly_salary = d; }
+ 34 
+ 35 ostream& operator << ( ostream& os, const Salaried& S )
+ 36 {
+ 37   os << static_cast<const Employee&>(S);
+ 38   os << "Monthly Salary: " << S._monthly_salary << endl;
+ 39   return os;
+ 40 }
+ 41 
+ 42 void Salaried::display( ostream& os )const
+ 43 {
+ 44   os << *this;
+ 45 }
+          </pre>
+
+          <pre id="foreperson-h" class="tabPanel">
+  1 //Foreperson.h
+  2
+  3 #ifndef _FOREPERSON_H_JMR_
+  4 #define _FOREPERSON_H_JMR_
+  5 #include "Salaried.h"
+  6 
+  7 class Foreperson : public Salaried
+  8 {
+  9   double _bonus_rate;
+ 10 
+ 11 public:
+ 12   Foreperson ( );
+ 13   Foreperson ( const STRING& Name, unsigned Dependents, double MonthlySalary,
+ 14              double BonusRate );
+ 15 
+ 16   Foreperson ( const Foreperson& );
+ 17 
+ 18   const Foreperson& operator= ( const Foreperson& );
+ 19 
+ 20   double getBonusRate ( ) const;
+ 21   void setBonusRate ( double );
+ 22 
+ 23   friend ostream &operator << ( ostream&, const Foreperson& );
+ 24 
+ 25   virtual void Display( ostream& ) const;
+ 26   virtual double GrossPay ( ) const;
+ 27 
+ 28 };
+ 29 
+ 30 #endif
+          </pre>
+
+          <pre id="foreperson-cpp" class="tabPanel">
+  1 //Foreperson.cpp
+  2 
+  3 #include "Foreperson.h"
+  4 
+  5 Foreperson::Foreperson ( )
+  6 :Salaried()
+  7 {
+  8   _bonus_rate = 0;
+  9 }
+ 10 
+ 11 Foreperson::Foreperson ( const STRING& Name, unsigned Dependents,
+ 12                        double MonthlySalary, double BonusRate )
+ 13 :Salaried ( Name, Dependents, MonthlySalary)
+ 14 {
+ 15   _bonus_rate = BonusRate;
+ 16 }
+ 17 
+ 18 Foreperson::Foreperson ( const Foreperson& Is )
+ 19 : Salaried ( static_cast<const Salaried&>(Is) )
+ 20 {
+ 21   _bonus_rate = Is._bonus_rate;
+ 22 }
+ 23 
+ 24 const Foreperson& Foreperson::operator= ( const Foreperson& Is)
+ 25 {
+ 26   if ( &Is == this ) return *this;
+ 27   static_cast<Salaried&>(*this) = static_cast<const Salaried&>(Is);
+ 28   _bonus_rate = Is._bonus_rate;
+ 29 
+ 30   return *this;
+ 31 }
+ 32 
+ 33 double Foreperson::getBonusRate ( ) const { return _bonus_rate; }
+ 34 void Foreperson::setBonusRate ( double d ) { _bonus_rate = d; }
+ 35 
+ 36 ostream &operator << ( ostream& os, const Foreperson& Is)
+ 37 {
+ 38   os << static_cast<const Salaried&>(Is);
+ 39   os << "Bonus Rate: " << Is._bonus_rate << endl;
+ 40 
+ 41   return os;
+ 42 }
+ 43 
+ 44 double Foreperson::GrossPay ( ) const
+ 45 {
+ 46   cout << "Foreperson pay: ";
+ 47   return (getMonthlySalary() + (getMonthlySalary() * _bonus_rate));
+ 48 }
+ 49 
+ 50 void Foreperson::Display( ostream& os ) const
+ 51 {
+ 52   os << *this;
+ 53 }
+          </pre>
+
+          <pre id="manager-h" class="tabPanel">
+  1 //Manager.h
+  2 
+  3 #ifndef _MANAGER_H_JMR_
+  4 #define _MANAGER_H_JMR_
+  5 #include "Salaried.h"
+  6 
+  7 class Manager : public Salaried
+  8 {
+  9   double _profit_share;
+ 10 
+ 11 public:
+ 12   Manager ( );
+ 13   Manager ( const STRING& Name, unsigned Dependents, double MonthlySalary,
+ 14           double ProfitShare );
+ 15 
+ 16   Manager ( const Manager& );
+ 17 
+ 18   const Manager& operator= ( const Manager& );
+ 19 
+ 20   double getProfitShare ( ) const;
+ 21   void setProfitShare ( double );
+ 22 
+ 23   friend ostream &operator << ( ostream&, const Manager& );
+ 24 
+ 25   virtual void Display( ostream& ) const;
+ 26   virtual double GrossPay ( ) const;
+ 27 
+ 28 };
+ 29 
+ 30 #endif
+          </pre>
+
+          <pre id="manager-cpp" class="tabPanel">
+  1 //Manager.cpp
+  2 
+  3 #include "Manager.h"
+  4 
+  5 Manager::Manager ( )
+  6 :Salaried()
+  7 {
+  8   _profit_share = 0;
+  9 }
+ 10 
+ 11 Manager::Manager ( const STRING& Name, unsigned Dependents,
+ 12                  double MonthlySalary, double ProfitShare )
+ 13 :Salaried(Name, Dependents, MonthlySalary)
+ 14 {
+ 15   _profit_share = ProfitShare;
+ 16 }
+ 17 
+ 18 Manager::Manager ( const Manager& Is )
+ 19 : Salaried ( static_cast<const Salaried&>(Is) )
+ 20 {
+ 21   _profit_share = Is._profit_share;
+ 22 }
+ 23 
+ 24 const Manager& Manager::operator= ( const Manager& Is)
+ 25 {
+ 26   if ( &Is == this ) return *this;
+ 27   static_cast<Salaried&>(*this) = static_cast<const Salaried&>(Is);
+ 28   _profit_share = Is._profit_share;
+ 29 
+ 30   return *this;
+ 31 }
+ 32 
+ 33 double Manager::getProfitShare ( ) const { return _profit_share; }
+ 34 void Manager::setProfitShare ( double d ) { _profit_share = d; }
+ 35 
+ 36 ostream &operator << ( ostream& os, const Manager& Is)
+ 37 {
+ 38   os << static_cast<const Salaried&>(Is);
+ 39   os << "Profit Share: " << Is._profit_share << endl;
+ 40 
+ 41   return os;
+ 42 }
+ 43 
+ 44 double Manager::GrossPay ( ) const
+ 45 {
+ 46   cout << "Manager pay: ";
+ 47   return (getMonthlySalary() + _profit_share);
+ 48 }
+ 49 
+ 50 void Manager::Display( ostream& os ) const
+ 51 {
+ 52   os << *this;
+ 53 }
+          </pre>
+
+          <pre id="hourly-h" class="tabPanel">
+  1 //Hourly.h
+  2 
+  3 #ifndef _HOURLY_H_JMR_
+  4 #define _HOURLY_H_JMR_
+  5 #include "Employee.h"
+  6 
+  7 class Hourly : public Employee
+  8 {
+  9   double _hourly_rate;
+ 10   double _hours_worked;
+ 11 
+ 12 public:
+ 13   Hourly ( );
+ 14   Hourly ( const STRING& Name, unsigned Dependents, double HourlyRate, double HoursWorked );
+ 15   Hourly ( const Hourly& );
+ 16 
+ 17   const Hourly& operator= ( const Hourly& );
+ 18 
+ 19   double getHourlyRate ( ) const;
+ 20   void setHourlyRate ( double );
+ 21 
+ 22   double getHoursWorked ( ) const;
+ 23   void setHoursWorked ( double );
+ 24 
+ 25   friend ostream &operator << ( ostream&, const Hourly& );
+ 26   void display( ostream& )const;
+ 27 
+ 28 };
+ 29 
+ 30 #endif
+          </pre>
+
+          <pre id="hourly-cpp" class="tabPanel">
+  1 //Hourly.cpp
+  2 
+  3 #include "Hourly.h"
+  4 
+  5 Hourly::Hourly ( )
+  6 : Employee()
+  7 {
+  8   _hourly_rate = 0;
+  9   _hours_worked = 0;
+ 10 }
+ 11 
+ 12 Hourly::Hourly ( const STRING& Name, unsigned Dependents, double HourlyRate, double HoursWorked)
+ 13 : Employee ( Name, Dependents )
+ 14 {
+ 15   _hourly_rate = HourlyRate;
+ 16   _hours_worked = HoursWorked;
+ 17 }
+ 18 
+ 19 Hourly::Hourly ( const Hourly& S )
+ 20 : Employee( static_cast<const Employee&>(S))
+ 21 {
+ 22   _hourly_rate = S._hourly_rate;
+ 23   _hours_worked = S._hours_worked;
+ 24 }
+ 25 
+ 26 const Hourly& Hourly::operator= ( const Hourly& S )
+ 27 {
+ 28   if ( &S == this ) return *this;
+ 29   static_cast<Employee&>(*this) = static_cast<const Employee&>(S);
+ 30   _hourly_rate = S._hourly_rate;
+ 31   _hours_worked = S._hours_worked;
+ 32   return *this;
+ 33 }
+ 34 
+ 35 double Hourly::getHourlyRate ( ) const { return _hourly_rate; }
+ 36 
+ 37 void Hourly::setHourlyRate ( double d ) { _hourly_rate = d; }
+ 38 
+ 39 double Hourly::getHoursWorked ( ) const { return _hours_worked; }
+ 40 
+ 41 void Hourly::setHoursWorked ( double d ) { _hours_worked = d; }
+ 42 
+ 43 ostream& operator << ( ostream& os, const Hourly& S )
+ 44 {
+ 45   os << static_cast<const Employee&>(S);
+ 46   os << "Hourly Rate: " << S._hourly_rate << endl;
+ 47   os << "Hours Worked: " << S._hours_worked << endl;
+ 48   return os;
+ 49 }
+ 50 
+ 51 void Hourly::display( ostream& os )const
+ 52 {
+ 53   os << *this;
+ 54 }
+          </pre>
+
+          <pre id="assembler-h" class="tabPanel">
+  1 //Assembler.h
+  2 
+  3 #ifndef _ASSEMBLER_H_JMR_
+  4 #define _ASSEMBLER_H_JMR_
+  5 #include "Hourly.h"
+  6 
+  7 class Assembler : public Hourly
+  8 {
+  9   double _piece_work_bonus;
+ 10   unsigned _pieces_produced;
+ 11 
+ 12 public:
+ 13   Assembler ( );
+ 14   Assembler ( const STRING& Name, unsigned Dependents, double HourlyRate, double HoursWorked,
+ 15             double PieceWorkBonus, unsigned PiecesProduced );
+ 16   Assembler ( const Assembler& );
+ 17 
+ 18   const Assembler& operator= ( const Assembler& );
+ 19 
+ 20   double getPieceWorkBonus ( ) const;
+ 21   void setPieceWorkBonus ( double );
+ 22 
+ 23   unsigned getPiecesProduced ( ) const;
+ 24   void setPiecesProduced ( unsigned );
+ 25 
+ 26   friend ostream &operator << ( ostream&, const Assembler& );
+ 27 
+ 28   virtual void Display( ostream& ) const;
+ 29   virtual double GrossPay ( ) const;
+ 30 
+ 31 };
+ 32 
+ 33 #endif
+          </pre>
+
+          <pre id="assembler-cpp" class="tabPanel">
+  1 //Assembler.cpp
+  2 
+  3 #include "Assembler.h"
+  4 
+  5 Assembler::Assembler ( )
+  6 : Hourly()
+  7 {
+  8   _piece_work_bonus = 0;
+  9   _pieces_produced = 0;
+ 10 }
+ 11 
+ 12 Assembler::Assembler ( const STRING& Name, unsigned Dependents, double HourlyRate,
+ 13                      double HoursWorked, double PieceWorkBonus, unsigned PiecesProduced )
+ 14 :Hourly(Name, Dependents, HourlyRate, HoursWorked)
+ 15 {
+ 16   _piece_work_bonus = PieceWorkBonus;
+ 17   _pieces_produced = PiecesProduced;
+ 18 }
+ 19 
+ 20 Assembler::Assembler ( const Assembler& Is )
+ 21 : Hourly ( static_cast<const Hourly&>(Is) )
+ 22 {
+ 23   _piece_work_bonus = Is._piece_work_bonus;
+ 24   _pieces_produced = Is._pieces_produced;
+ 25 }
+ 26 
+ 27 const Assembler& Assembler::operator= ( const Assembler& Is)
+ 28 {
+ 29   if ( &Is == this ) return *this;
+ 30   static_cast<Hourly&>(*this) = static_cast<const Hourly&>(Is);
+ 31   _piece_work_bonus = Is._piece_work_bonus;
+ 32   _pieces_produced = Is._pieces_produced;
+ 33 
+ 34   return *this;
+ 35 }
+ 36 
+ 37 double Assembler::getPieceWorkBonus ( ) const { return _piece_work_bonus; }
+ 38 void Assembler::setPieceWorkBonus ( double d ) { _piece_work_bonus = d; }
+ 39
+ 40 unsigned Assembler::getPiecesProduced ( ) const { return _pieces_produced; }
+ 41 void Assembler::setPiecesProduced ( unsigned d ) { _pieces_produced = d; }
+ 42 
+ 43 ostream &operator << ( ostream& os, const Assembler& Is)
+ 44 {
+ 45   os << static_cast<const Hourly&>(Is);
+ 46   os << "Piece Work Bonus: " << Is._piece_work_bonus << endl;
+ 47   os << "Pieces Produced: " << Is._pieces_produced << endl;
+ 48 
+ 49   return os;
+ 50 }
+ 51 
+ 52 double Assembler::GrossPay ( ) const
+ 53 {
+ 54   cout << "Assembler pay: ";
+ 55   return ((getHoursWorked() * getHourlyRate()) + (_pieces_produced * _piece_work_bonus));
+ 56 }
+ 57 
+ 58 void Assembler::Display( ostream& os ) const
+ 59 {
+ 60   os << *this;
+ 61 }
+          </pre>
+
+          <pre id="truckdriver-h" class="tabPanel">
+  1 //Truckdriver.h
+  2 
+  3 #ifndef _TRUCKDRIVER_H_JMR_
+  4 #define _TRUCKDRIVER_H_JMR_
+  5 #include "Hourly.h"
+  6 
+  7 class Truckdriver : public Hourly
+  8 {
+  9   double _hours_driven;
+ 10   double _hours_driven_bonus;
+ 11 
+ 12 public:
+ 13   Truckdriver ( );
+ 14   Truckdriver ( const STRING& Name, unsigned Dependents, double HourlyRate,
+ 15               double HoursWorked, double HoursDriven, double HoursDrivenBonus );
+ 16 
+ 17   Truckdriver ( const Truckdriver& );
+ 18 
+ 19   const Truckdriver& operator= ( const Truckdriver& );
+ 20 
+ 21   double getHoursDriven ( ) const;
+ 22   void setHoursDriven ( double );
+ 23 
+ 24   double getHoursDrivenBonus ( ) const;
+ 25   void setHoursDrivenBonus ( double );
+ 26 
+ 27   friend ostream &operator << ( ostream&, const Truckdriver& );
+ 28 
+ 29   virtual void Display( ostream& ) const;
+ 30   virtual double GrossPay ( ) const;
+ 31 
+ 32 };
+ 33 
+ 34 #endif
+          </pre>
+
+          <pre id="truckdriver-cpp" class="tabPanel">
+  1 //Truckdriver.cpp
+  2 
+  3 #include "Truckdriver.h"
+  4 
+  5 Truckdriver::Truckdriver ( )
+  6 :Hourly()
+  7 {
+  8   _hours_driven = 0;
+  9   _hours_driven_bonus = 0;
+ 10 }
+ 11
+ 12 Truckdriver::Truckdriver ( const STRING& Name, unsigned Dependents, double HourlyRate,
+ 13                          double HoursWorked, double HoursDriven, double HoursDrivenBonus )
+ 14 :Hourly(Name, Dependents, HourlyRate, HoursWorked)
+ 15 {
+ 16   _hours_driven = HoursDriven;
+ 17   _hours_driven_bonus = HoursDrivenBonus;
+ 18 }
+ 19 
+ 20 Truckdriver::Truckdriver ( const Truckdriver& Is )
+ 21 : Hourly ( static_cast<const Hourly&>(Is) )
+ 22 {
+ 23   _hours_driven = Is._hours_driven;
+ 24   _hours_driven_bonus = Is._hours_driven_bonus;
+ 25 }
+ 26 
+ 27 const Truckdriver& Truckdriver::operator= ( const Truckdriver& Is)
+ 28 {
+ 29   if ( &Is == this ) return *this;
+ 30   static_cast<Hourly&>(*this) = static_cast<const Hourly&>(Is);
+ 31   _hours_driven = Is._hours_driven;
+ 32   _hours_driven_bonus = Is._hours_driven_bonus;
+ 33 
+ 34   return *this;
+ 35 }
+ 36 
+ 37 double Truckdriver::getHoursDriven ( ) const { return _hours_driven; }
+ 38 void Truckdriver::setHoursDriven ( double d ) { _hours_driven = d; }
+ 39 
+ 40 double Truckdriver::getHoursDrivenBonus ( ) const { return _hours_driven_bonus; }
+ 41 void Truckdriver::setHoursDrivenBonus ( double d ) { _hours_driven_bonus = d; }
+ 42 
+ 43 ostream &operator << ( ostream& os, const Truckdriver& Is)
+ 44 {
+ 45   os << static_cast<const Hourly&>(Is);
+ 46   os << "Hours Driven: " << Is._hours_driven << endl;
+ 47   os << "Hours Driven Bonus: " << Is._hours_driven_bonus << endl;
+ 48 
+ 49   return os;
+ 50 }
+ 51 
+ 52 double Truckdriver::GrossPay ( ) const
+ 53 {
+ 54   cout << "Truckdriver pay: ";
+ 55   return ((getHoursWorked() * getHourlyRate()) + (_hours_driven * _hours_driven_bonus));
+ 56 }
+ 57 
+ 58 void Truckdriver::Display( ostream& os ) const
+ 59 {
+ 60   os << *this;
+ 61 }
+          </pre>
+
+          <pre id="payroll-h" class="tabPanel">
+  1 //Payroll.h
+  2 
+  3 #ifndef _PAYROLL_H_JMR_
+  4 #define _PAYROLL_H_JMR_
+  5
+  6 #include <iostream>
+  7 using namespace std;
+  8
+  9 #include "Employee.h"
+ 10 #include "Foreperson.h"
+ 11 #include "Manager.h"
+ 12 #include "Assembler.h"
+ 13 #include "Truckdriver.h"
+ 14 
+ 15 const int PAYROLL_SIZE = 5;
+ 16 
+ 17 class Payroll
+ 18 {
+ 19   Employee*  _PR[PAYROLL_SIZE];
+ 20   unsigned   _num_emps;
+ 21
+ 22   void _add_emp ( );
+ 23   void _gross_pay ( ) const;
+ 24   void _display ( ) const;
+ 25
+ 26   void _add_foreperson ( );
+ 27   void _add_manager ( );
+ 28   void _add_assembler ( );
+ 29   void _add_truckdriver ( );
+ 30
+ 31 public:
+ 32   Payroll ( );
+ 33   ~Payroll ( );
+ 34   void Run ( );
+ 35 };
+ 36
+ 37 #endif
+          </pre>
+
+          <pre id="payroll-cpp" class="tabPanel">
+   1 //Payroll.cpp
+   2
+   3 #include "Payroll.h"
+   4 #include "Short_String.h"
+   5 #include <iostream>
+   6
+   7 Payroll::Payroll ( )
+   8 {
+   9   for (unsigned i = 0; i < PAYROLL_SIZE; i++)
+  10    _PR[i] = NULL;
+  11  _num_emps = 0;
+  12 }
+  13
+  14 Payroll:~Payroll ( )
+  15 {
+  16   for (unsigned i = 0; i < _num_emps; i++)
+  17     delete _PR[i];
+  18   _num_emps = 0;
+  19 }
+  20
+  21 void Payroll::Run ( )
+  22 {
+  23   char choice = '0';
+  24
+  25   while (choice != '4')
+  26   {
+  27     cout << "1. Enter a new Employee" << endl;
+  28     cout << "2. Calculate gross payroll for pay period" << endl;
+  29     cout << "3. Display all employees" << endl;
+  30     cout << "4. Exit" << endl;
+  31 
+  32     cin >> choice;
+  33
+  34     switch (choice)
+  35     {
+  36       case '1':
+  37         if (_num_emps < PAYROLL_SIZE) {_add_emp();}
+  38         else {cout << "Payroll is full. Cannot add employee." << endl;}
+  39         break;
+  40       case '2':
+  41         _gross_pay();
+  42         break;
+  43       case '3':
+  44         _display();
+  45         break;
+  46       case '4':
+  47         return;
+  48       default:
+  49         cout << "Invalid choice." << endl;
+  50     }
+  51   }
+  52 }
+  53 
+  54 void Payroll::_add_emp ( )
+  55 {
+  56   char empChoice;
+  57 
+  58   cout << "1. Foreperson" << endl;
+  59   cout << "2. Manager" << endl;
+  60   cout << "3. Assembler" << endl;
+  61   cout << "4. Truckdriver" << endl;
+  62   cout << "5. Cancel" << endl;
+  63
+  64   cin >> empChoice;
+  65
+  66   switch (empChoice)
+  67   {
+  68     case '1':
+  69       _add_foreperson();
+  70       break;
+  71     case '2':
+  72       _add_manager();
+  73       break;
+  74     case '3':
+  75       _add_assembler();
+  76       break;
+  77     case '4':
+  78       _add_truckdriver();
+  79       break;
+  80     case '5':
+  81       return;
+  82     default:
+  83       cout << "Invalid choice." << endl;
+  84       break;
+  85   }
+  86 }
+  87
+  88 void Payroll::_gross_pay ( ) const
+  89 {
+  90   if (_num_emps == 0) {cout << "Payroll is empty." << endl;}
+  91   else
+  92   {
+  93     double pay = 0;
+  94     for (unsigned i = 0; i < _num_emps; i++)
+  95     {
+  96       pay += _PR[i] -> GrossPay();
+  97     }
+  98     cout << "Gross Pay: " << pay << endl;
+  99   }
+ 100 }
+ 101 
+ 102 void Payroll::_display ( ) const
+ 103 {
+ 104   if (_num_emps == 0) {cout << "Payroll is empty." << endl;}
+ 105   else
+ 106   {
+ 107     for (unsigned i = 0; i < _num_emps; i++)
+ 108     {
+ 109       _PR[i] -> Display(std::cout);
+ 110       cout << endl;
+ 111     }
+ 112   }
+ 113 }
+ 114
+ 115 void Payroll::_add_foreperson ( )
+ 116 {
+ 117   static STRING name;
+ 118   unsigned dependents;
+ 119   double monthlySalary;
+ 120   double bonusRate;
+ 121
+ 122   cout << endl << "Enter employee name: ";
+ 123   cin >> name;
+ 124   cout << "Enter number of dependents: ";
+ 125   cin >> dependents;
+ 126   cout << "Enter monthly salary: ";
+ 127   cin >> monthlySalary;
+ 128   cout << "Enter bonus rate: ";
+ 129   cin >> bonusRate;
+ 130
+ 131   Foreperson* temp = new Foreperson;
+ 132   temp -> setName(name);
+ 133   temp -> setDependents(dependents);
+ 134   temp -> setMonthlySalary(monthlySalary);
+ 135   temp -> setBonusRate(bonusRate);
+ 136   _PR[_num_emps++] = temp;
+ 137 }
+ 138 
+ 139 void Payroll::_add_manager ( )
+ 140 {
+ 141   static STRING name;
+ 142   unsigned dependents;
+ 143   double monthlySalary;
+ 144   double profitShare;
+ 145
+ 146   cout << endl << "Enter employee name: ";
+ 147   cin >> name;
+ 148   cout << "Enter number of dependents: ";
+ 149   cin >> dependents;
+ 150   cout << "Enter monthly salary: ";
+ 151   cin >> monthlySalary;
+ 152   cout << "Enter profit share: ";
+ 153   cin >> profitShare;
+ 154
+ 155   Manager* temp = new Manager;
+ 156   temp -> setName(name);
+ 157   temp -> setDependents(dependents);
+ 158   temp -> setMonthlySalary(monthlySalary);
+ 159   temp -> setProfitShare(profitShare);
+ 160   _PR[_num_emps++] = temp;
+ 161 }
+ 162
+ 163 void Payroll::_add_assembler ( )
+ 164 {
+ 165   static STRING name;
+ 166   unsigned dependents;
+ 167   double hourlyRate;
+ 168   double hoursWorked;
+ 169   double pieceWorkBonus;
+ 170   unsigned piecesProduced;
+ 171
+ 172   cout << endl << "Enter employee name: ";
+ 173   cin >> name;
+ 174   cout << "Enter number of dependents: ";
+ 175   cin >> dependents;
+ 176   cout << "Enter hourly rate: ";
+ 177   cin >> hourlyRate;
+ 178   cout << "Enter hours worked: ";
+ 179   cin >> hoursWorked;
+ 180   cout << "Enter piece work bonus: ";
+ 181   cin >> pieceWorkBonus;
+ 182   cout << "Enter number of pieces produced: ";
+ 183   cin >> piecesProduced;
+ 184
+ 185   Assembler* temp = new Assembler;
+ 186   temp -> setName(name);
+ 187   temp -> setDependents(dependents);
+ 188   temp -> setHourlyRate(hourlyRate);
+ 189   temp -> setHoursWorked(hoursWorked);
+ 190   temp -> setPieceWorkBonus(pieceWorkBonus);
+ 191   temp -> setPiecesProduced(piecesProduced);
+ 192   _PR[_num_emps++] = temp;
+ 193 }
+ 194
+ 195 void Payroll::_add_truckdriver ( )
+ 196 {
+ 197   static STRING name;
+ 166   unsigned dependents;
+ 167   double hourlyRate;
+ 168   double hoursWorked;
+ 169   double hoursDriven;
+ 170   double hoursDrivenBonus;
+ 171
+ 172   cout << endl << "Enter employee name: ";
+ 173   cin >> name;
+ 174   cout << "Enter number of dependents: ";
+ 175   cin >> dependents;
+ 176   cout << "Enter hourly rate: ";
+ 177   cin >> hourlyRate;
+ 178   cout << "Enter hours worked: ";
+ 179   cin >> hoursWorked;
+ 180   cout << "Enter number of hours driven: ";
+ 181   cin >> hoursDriven;
+ 182   cout << "Enter hours driven bonus: ";
+ 183   cin >> hoursDrivenBonus;
+ 184
+ 185   Truckdriver* temp = new Truckdriver;
+ 186   temp -> setName(name);
+ 187   temp -> setDependents(dependents);
+ 188   temp -> setHourlyRate(hourlyRate);
+ 189   temp -> setHoursWorked(hoursWorked);
+ 190   temp -> setHoursDriven(hoursDriven);
+ 191   temp -> setHoursDrivenBonus(hoursDrivenBonus);
+ 192   _PR[_num_emps++] = temp;
+ 193 }
+          </pre>
+        </div>
+      </div>
+    </div>
+
+    <script src="javascript.js"></script>
+  </body>
+
+</html>
